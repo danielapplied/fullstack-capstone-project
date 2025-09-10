@@ -33,13 +33,13 @@ function LoginPage() {
             method: 'POST',
             //Step 1 - Task 8
           headers: {
-            'content-type': 'application/json',
+            "content-type": "application/json; charset=utf-8",
             'Authorization': bearerToken ? `Bearer ${bearerToken}` : '', // Include Bearer token if available
           },
         //Step 1 - Task 9
           body: JSON.stringify({
-            email: email,
-            password: password,
+            email,
+            password
           })
         });
 

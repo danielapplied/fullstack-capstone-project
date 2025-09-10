@@ -1,5 +1,6 @@
 const express = require('express');
 const bcryptjs = require('bcryptjs');
+const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const connectToDatabase = require('../models/db');
 const router = express.Router();
@@ -27,10 +28,12 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'Email id already exists' });
         }
 
-        const salt = await bcryptjs.genSalt(10);
-        const hash = await bcryptjs.hash(req.body.password, salt);
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hashSync(req.body.password, salt);
         const email=req.body.email;
+
         console.log('email is',email);
+
         const newUser = await collection.insertOne({
             email: req.body.email,
             firstName: req.body.firstName,
@@ -46,8 +49,11 @@ router.post('/register', async (req, res) => {
         };
 
         const authtoken = jwt.sign(payload, JWT_SECRET);
+
         logger.info('User registered successfully');
-        res.json({ authtoken,email });
+
+        return res.json({ authtoken,email, firstName: req.body.firstName });
+
     } catch (e) {
         logger.error(e);
         return res.status(500).send('Internal server error');
@@ -55,6 +61,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+
     console.log("\n\n Inside login")
 
     try {
@@ -64,7 +71,7 @@ router.post('/login', async (req, res) => {
         const theUser = await collection.findOne({ email: req.body.email });
 
         if (theUser) {
-            let result = await bcryptjs.compare(req.body.password, theUser.password)
+            let result = await bcrypt.compare(req.body.password, theUser.password)
             if(!result) {
                 logger.error('Passwords do not match');
                 return res.status(404).json({ error: 'Wrong pasword' });

@@ -68,7 +68,7 @@ const handleSubmit = async (e) => {
       method: "PUT",//Step 1: Task 1
       headers: {//Step 1: Task 2
         "Authorization": `Bearer ${authtoken}`,
-        "Content-Type": "application/json",
+         "content-type": "application/json; charset=utf-8",
         "Email": email,
       },
       body: JSON.stringify(payload),//Step 1: Task 3

@@ -29,14 +29,14 @@ function RegisterPage() {
             method: 'POST',
             //Step 1 - Task 7
             headers: {
-                'content-type': 'application/json',
+               "content-type": "application/json; charset=utf-8",
             },
             //Step 1 - Task 8
             body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password
+                firstName,
+                lastName,
+                email,
+                password,
             })
         });
 
