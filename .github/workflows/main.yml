@@ -1,0 +1,62 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint_js:
+    runs-on: ubuntu-latest
+    name: JavaScript Linting
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Node.js runtime
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install JSHint linter
+      run: npm install jshint
+    
+    - name: Run linting on JavaScript files
+      run: npx jshint **/*.js
+    
+    - name: Print success message
+      run: echo "✅ JavaScript linting completed successfully!"
+
+  client_build:
+    runs-on: ubuntu-latest
+    name: Client Build
+    needs: lint_js
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Node.js runtime
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Change to front-end directory
+      run: cd giftlink-frontend
+    
+    - name: Install packages
+      run: |
+        cd giftlink-frontend
+        npm install
+    
+    - name: Build client and copy to server
+      run: |
+        cd giftlink-frontend
+        npm run build
+    
+    - name: Print success message
+      run: echo "✅ Client build completed successfully!"
