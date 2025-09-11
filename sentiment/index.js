@@ -1,3 +1,5 @@
+"use strict";
+// Your code here runs in strict mode
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');

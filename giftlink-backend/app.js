@@ -1,3 +1,5 @@
+"use strict";
+// Your code here runs in strict mode
 /*jshint esversion: 8 */
 require('dotenv').config();
 const express = require('express');
