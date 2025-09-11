@@ -1,0 +1,21 @@
+{
+  "esversion": 6,
+  "node": true,
+  "browser": true,
+  "strict": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+  "boss": true,
+  "eqnull": true,
+  "globals": {
+    "jQuery": false,
+    "$": false
+  }
+}
